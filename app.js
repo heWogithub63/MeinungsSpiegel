@@ -50,7 +50,7 @@ async function requestGet() {
 		    console.log('Connected successfully to server');
   
                  });
-                 collection = await client.db("MeinungsSpiegel").collection("Gesundheitspolitik");
+                 collection = await client.db("MeinungsSpiegel").collection("AktuellePolitik");
                  countDocs(collection);
                     
         } catch (e) {
@@ -71,7 +71,7 @@ async function requestPost() {
                     console.log('Connected successfully to server');
                     
                  });
-                collection = await client.db("MeinungsSpiegel").collection("Gesundheitspolitik");
+                collection = await client.db("MeinungsSpiegel").collection("AktuellePolitik");
                 findBrowserId (collection);
                     
         } catch (e) {
