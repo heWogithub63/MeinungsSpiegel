@@ -64,22 +64,24 @@ async function requestGet() {
 async function requestPost() {
 	const uri = "mongodb+srv://wh:admin01@cluster0.kmwrpfb.mongodb.net/?retryWrites=true&w=majority";
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        var collection;
+        const collection = client.db("MeinungsSpiegel").collection("AkutePolitik");;
         try {
-		await client.connect(err => {
-        
-                    console.log('Connected successfully to server');
-                    
-                 });
-                collection = await client.db("MeinungsSpiegel").collection("AktuellePolitik");
-                findBrowserId (collection);
+                await client.connect((err) => {
+		  if (err) {
+		    console.log('Connection to server wasnt successfull');
+		  } else {
+		    console.log('Connected successfully to server');
+
+                    findBrowserId (collection)
+		  }
+		})
                     
         } catch (e) {
 		   console.error(e);
+                   client.close();
         }
-        finally {
-                   await client.close();
-        }
+        
+                   
 }
 
 function createDocument(id, arr) {
@@ -121,7 +123,7 @@ function countDocs (collection) {
 }
 
 async function findBrowserId (collection) {
-
+   var idexist = false;
    if(kindOfQuery == 'request') {
 	    var brtext = txts[1];
 	    if(membCount > 0) {
@@ -136,6 +138,7 @@ async function findBrowserId (collection) {
 	      startInput(collection,null);
    } else {
         resend.status(200).json({"Message": "membCount", membCount});
+        client.close();
    }
 }
 
@@ -143,4 +146,5 @@ async function startInput(col, id) {
 
    if(id == null)
       await col.insertOne(createDocument((membCount +1), txts));
+   client.close();
 }
