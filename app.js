@@ -67,7 +67,7 @@ async function requestGet() {
 async function requestPost() {
 	const uri = "mongodb+srv://wh:admin01@cluster0.kmwrpfb.mongodb.net/?retryWrites=true&w=majority";
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        const collection = client.db("MeinungsSpiegel").collection("WirtschaftsLage");
+        const collection = await client.db("MeinungsSpiegel").collection("WirtschaftsLage");
         try {
                 await client.connect((err) => {
 		  if (err) {
