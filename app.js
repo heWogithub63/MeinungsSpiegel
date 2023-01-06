@@ -58,14 +58,14 @@ async function requestGet() {
 		   console.error(e);
         }
         finally {
-                   await client.close();
+                   await client.close() 
         }
 }
 
 async function requestPost() {
 	const uri = "mongodb+srv://wh:admin01@cluster0.kmwrpfb.mongodb.net/?retryWrites=true&w=majority";
         const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        const collection = client.db("MeinungsSpiegel").collection("AkutePolitik");;
+        const collection = client.db("MeinungsSpiegel").collection("AktuellePolitik");;
         try {
                 await client.connect((err) => {
 		  if (err) {
@@ -79,7 +79,8 @@ async function requestPost() {
                     
         } catch (e) {
 		   console.error(e);
-                   client.close();
+        } finally {
+                   await client.close() 
         }
         
                    
