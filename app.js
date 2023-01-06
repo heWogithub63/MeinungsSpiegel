@@ -46,9 +46,10 @@ async function requestGet() {
         var collection;
         try {
 		 await client.connect(err => {
-              
-		    console.log('Connected successfully to server');
-  
+                    if(err)
+		       console.log('No successfully connection to server');
+                    else
+                       console.log('Successfully connected to server');
                  });
                  collection = await client.db("MeinungsSpiegel").collection("AktuellePolitik");
                  countDocs(collection);
