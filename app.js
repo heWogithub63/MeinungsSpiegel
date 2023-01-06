@@ -58,7 +58,9 @@ async function requestGet() {
 		   console.error(e);
         }
         finally {
-                   await client.close() 
+                   try {
+                       await client.close();
+                    } catch (Exception e) {e.getMassage();} 
         }
 }
 
@@ -80,7 +82,9 @@ async function requestPost() {
         } catch (e) {
 		   console.error(e);
         } finally {
-                   await client.close() 
+                   try {
+                        await client.close();
+                   } catch (Exception e) {e.getMassage();}
         }
         
                    
@@ -140,7 +144,9 @@ async function findBrowserId (collection) {
 	      startInput(collection,null);
    } else {
         resend.status(200).json({"Message": "membCount", membCount});
-        client.close();
+        try {
+             await client.close();
+        } catch (Exception e) {e.getMassage();}
    }
 }
 
@@ -148,5 +154,7 @@ async function startInput(col, id) {
 
    if(id == null)
       await col.insertOne(createDocument((membCount +1), txts));
-   client.close();
+   try {
+             await client.close();
+        } catch (Exception e) {e.getMassage();}
 }
